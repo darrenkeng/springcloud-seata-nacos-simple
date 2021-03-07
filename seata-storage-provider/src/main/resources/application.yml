@@ -1,0 +1,53 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seata_sample_storage?useUnicode=true&characterEncoding=utf-8&useSSL=true
+    username: root
+    password: 123456
+    druid:
+      max-active: 100
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+
+# 此处为自定义，配置中心和注册中心共同属性，下文引入即可
+nacos:
+  group: SEATA_GROUP
+  # 配置中心地址
+  server-addr: 127.0.0.1:8848
+  # 命名空间
+  namespace: seata
+  seata:
+    server-addr: 127.0.0.1:8848
+    application: seata-server
+    tx-service-group: storage-tx-group
+
+# 以下配置 配置在nacos服务端
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: ${nacos.seata.tx-service-group}
+  enable-auto-data-source-proxy: true
+  use-jdk-proxy: true
+  config:
+    # 指明类型
+    type: nacos
+    nacos:
+      server-addr: ${nacos.seata.server-addr}
+      namespace: ${nacos.namespace}
+      group: ${nacos.group}
+      username: ""
+      password: ""
+  registry:
+    type: nacos
+    nacos:
+      application: ${nacos.seata.application}
+      server-addr: ${nacos.seata.server-addr}
+      namespace: ${nacos.namespace}
+      group: ${nacos.group}
+      username: ""
+      password: ""
+

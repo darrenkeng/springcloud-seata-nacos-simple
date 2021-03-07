@@ -1,0 +1,15 @@
+server:
+  port: 8003
+spring:
+  application:
+    name: seata-account-provider
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      discovery:
+        namespace: member
+        group: SEATA_GROUP
+      config:
+        namespace: member
+        group: SEATA_GROUP
+        file-extension: yaml

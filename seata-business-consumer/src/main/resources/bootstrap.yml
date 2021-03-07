@@ -1,0 +1,15 @@
+server:
+  port: 80
+spring:
+  application:
+    name: seata-business-consumer
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      discovery:
+        namespace: member
+        group: SEATA_GROUP
+      config:
+        namespace: member
+        group: SEATA_GROUP
+        file-extension: yaml
